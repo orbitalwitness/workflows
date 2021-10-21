@@ -17,6 +17,10 @@ on:
         type: string
         description: "Build's context is the set of files located in the specified PATH or URL"
         required: false
+      file:
+        type: string
+        description: "Path to the Dockerfile. (default {context}/Dockerfile)"
+        required: false
     secrets:
       docker-username:
         required: true
@@ -57,6 +61,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ${{ inputs.context }}
+          file: ${{ inputs.file }}
           push: ${{ github.event_name != 'pull_request' }}
           build-args: ${{ inputs.build-args }}
           tags: ${{ steps.meta.outputs.tags }}
